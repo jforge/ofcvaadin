@@ -11,6 +11,7 @@ import jofc2.model.elements.HorizontalBarChart;
 import jofc2.model.elements.LineChart;
 import jofc2.model.elements.PieChart;
 
+import org.ofcvaadin.ui.OpenFlashChart;
 import org.ofcvaadin.ui.OpenFlashChart.ChartDataGenerator;
 
 import com.vaadin.Application;
@@ -41,6 +42,8 @@ public class DemoApplication extends Application {
 		});
 		mainWindow.addComponent(showDemos);
 		
+		embedOpenFlashChart(mainWindow);
+		
 		setMainWindow(mainWindow);
 	}
 	
@@ -49,6 +52,39 @@ public class DemoApplication extends Application {
 		getMainWindow().addWindow(createBarChartDemo());
 		getMainWindow().addWindow(createHorizontalBarChartDemo());
 		getMainWindow().addWindow(createPieChartDemo());
+	}
+	
+	@SuppressWarnings("serial")
+	private void embedOpenFlashChart(Window mainWindow){
+		OpenFlashChart chartVaadin = new OpenFlashChart(this);
+		chartVaadin.setWidth("500px");
+		chartVaadin.setHeight("200px");
+		mainWindow.addComponent(chartVaadin);
+		
+		chartVaadin.setChartDataGenerator(new ChartDataGenerator(){
+			@Override
+			public String getJson() {
+				LineChart lc = new LineChart();
+				lc.setText("test_1");
+
+				ArrayList<Number> lst = new ArrayList<Number>();
+				for (int i = 0; i < 10; i++) {
+					lst.add((int) (Math.random() * 20));
+				}
+				lc.addValues(lst);
+
+				YAxis ya = new YAxis();
+				ya.setMax(22);
+				ya.setSteps(2);
+
+				Chart c = new Chart("Line Chart");
+				c.addElements(lc);
+				c.setYAxis(ya);
+
+				String s = OFC.getInstance().prettyPrint(c, 4);
+				return s;
+			}
+		});
 	}
 	
 	@SuppressWarnings("serial")
