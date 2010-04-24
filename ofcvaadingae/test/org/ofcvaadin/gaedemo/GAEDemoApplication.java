@@ -3,6 +3,7 @@ package org.ofcvaadin.gaedemo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ofcvaadin.ui.OpenFlashChart;
 import org.ofcvaadin.ui.OpenFlashChart.ChartDataGenerator;
 import org.openflashchart.chart.Chart;
 import org.openflashchart.component.Labels;
@@ -52,9 +53,55 @@ public class GAEDemoApplication extends Application {
 		});
 		mainWindow.addComponent(showDemos);
 		
+		embedOpenFlashChart(mainWindow);
+		
 		setMainWindow(mainWindow);
 		
-		showAllDemoWindows();
+		//showAllDemoWindows();
+	}
+	
+	private void embedOpenFlashChart(Window mainWindow){
+		OpenFlashChart chartVaadin = new OpenFlashChart(this);
+		chartVaadin.setWidth("500px");
+		chartVaadin.setHeight("200px");
+		mainWindow.addComponent(chartVaadin);
+
+		chartVaadin.setChartDataGenerator(new ChartDataGenerator(){
+			@Override
+			public String getJson() {
+				Chart chart = new Chart();
+
+				X_Axis x_axis = new X_Axis();
+				x_axis.setColour("#FF0000");
+				x_axis.setMax(30);
+				String[] x_axisLabels = new String[] { "0.00", "0.38", "0.74", "1.07",
+						"1.36", "1.60", "1.77", "1.87", "1.90", "1.85", "1.73", "1.54",
+						"1.28", "0.98", "0.64", "0.27", "-0.11", "-0.49", "-0.84",
+						"-1.16", "-1.44", "-1.66", "-1.81", "-1.89", "-1.89", "-1.82",
+						"-1.68", "-1.47", "-1.20", "-0.88" };
+
+				x_axis.setList_labels(x_axisLabels);
+
+				Y_Axis y_axis = new Y_Axis();
+				y_axis.setColour("#00FF00");
+				y_axis.setMax(3);
+
+				Line_Hollow line_hollow = new Line_Hollow("My name is Line_Hollow");
+				line_hollow.setDot__size(4);
+				line_hollow.setHalo__size(2);
+				List<Double> values = new ArrayList<Double>();
+				for (double i = 0; i < 8; i += 0.2) {
+					double val = Math.sin(i) + 1.5;
+					values.add(val);
+				}
+				line_hollow.setValues(values);
+
+				chart.setLine_Hollow(line_hollow);
+				chart.setX_Axis(x_axis);
+				chart.setY_Axis(y_axis);
+				return chart.createChart();
+			}
+		});
 	}
 	
 	private void showAllDemoWindows(){
