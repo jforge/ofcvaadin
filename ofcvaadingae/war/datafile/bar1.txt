@@ -1,0 +1,71 @@
+{
+	"title": 
+		{
+			"text": "Bar Chart",
+			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+		},
+	"x_axis": 
+		{
+			"labels": 
+				{
+					"labels": 
+						[
+							"text",
+							"#ef0",
+							"10",
+							"vertical"
+						]
+				},
+			"3d": 0,
+			"offset": true
+		},
+	"y_axis": 
+		{
+			"tick-length": 0,
+			"labels": 
+				{},
+			"steps": 3,
+			"min": 0,
+			"max": 24,
+			"3d": 0,
+			"offset": true
+		},
+	"elements": 
+		[
+			{
+				"on-show": 
+					{},
+				"colour": "#344565",
+				"tip": "\u63D0\u793A:label:#x_label#\u003Cbr>#top#\u003Cbr>#bottom#\u003Cbr>#val#",
+				"values": 
+					[
+						0,
+						1,
+						3,
+						3,
+						5,
+						7,
+						6,
+						9,
+						13,
+						40,
+						20,
+						25,
+						{
+							"top": 12,
+							"on-click": "http://code.google.com/p/ofcvaadin/"
+						}
+					],
+				"font-size": 10,
+				"text": "Test",
+				"fill-alpha": 0.35,
+				"alpha": 0.8,
+				"type": "bar",
+				"dot-style": 
+					{
+						"on-show": 
+							{}
+					}
+			}
+		]
+}

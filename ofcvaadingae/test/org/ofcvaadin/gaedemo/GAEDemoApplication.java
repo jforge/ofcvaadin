@@ -1,9 +1,11 @@
 package org.ofcvaadin.gaedemo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.ofcvaadin.ui.OpenFlashChart;
+import org.ofcvaadin.ui.OpenFlashChartV2;
 import org.ofcvaadin.ui.OpenFlashChart.ChartDataGenerator;
 import org.openflashchart.chart.Chart;
 import org.openflashchart.component.Labels;
@@ -54,10 +56,9 @@ public class GAEDemoApplication extends Application {
 		mainWindow.addComponent(showDemos);
 		
 		embedOpenFlashChart(mainWindow);
+		embedOpenFlashChartV2(mainWindow);
 		
 		setMainWindow(mainWindow);
-		
-		//showAllDemoWindows();
 	}
 	
 	private void embedOpenFlashChart(Window mainWindow){
@@ -102,6 +103,49 @@ public class GAEDemoApplication extends Application {
 				return chart.createChart();
 			}
 		});
+	}
+	
+	private static int s_index = 0;
+	private void embedOpenFlashChartV2(Window mainWindow){
+		mainWindow.addComponent(new Label("The following is an experimental chart V2"));
+		final OpenFlashChartV2 chartVaadin = new OpenFlashChartV2(this, "../ofc2/open-flash-chart.swf");
+		chartVaadin.setWidth("500px");
+		chartVaadin.setHeight("200px");
+		mainWindow.addComponent(chartVaadin);
+		
+		chartVaadin.setChartDataGenerator(new OpenFlashChartV2.ChartDataGenerator(){
+			@Override
+			public String getJson() {
+				StringBuffer sb = new StringBuffer();
+				try {
+					s_index = (s_index + 1) % 3;
+					java.io.BufferedReader f = new java.io.BufferedReader(
+							new java.io.FileReader("datafile/bar"+s_index+".txt"));
+					String line = f.readLine();
+					while(line != null){
+						sb.append(line);
+						sb.append('\n');
+						line = f.readLine();
+					}
+					f.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				return sb.toString();
+			}
+		});
+		
+		Button refresh = new Button("Refresh Chart V2");
+		refresh.addListener(new ClickListener(){
+			private static final long serialVersionUID = -89669779516839869L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				chartVaadin.requestRepaint();
+			}
+		});
+		mainWindow.addComponent(refresh);
 	}
 	
 	private void showAllDemoWindows(){
