@@ -1,0 +1,101 @@
+<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'
+        codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0'
+        width='500' height='250' id='graph-2' align='middle'>
+	<param name='allowScriptAccess' value='sameDomain' />
+	<param name='movie' value='open-flash-chart.swf' />
+	<param name='quality' value='high' />
+	<embed src='open-flash-chart.swf'
+		   quality='high'
+		   bgcolor='#FFFFFF'
+		   width='500'
+		   height='250'
+		   name='open-flash-chart'
+		   align='middle'
+		   allowScriptAccess='sameDomain'
+		   type='application/x-shockwave-flash'
+		   pluginspage='http://www.macromedia.com/go/getflashplayer' />
+</object>
+
+
+
+<object width='550px' height='200px'>
+	<param value='data-file=../ofcvaadindata' name='flashvars'>
+	<param value='../ofc/open-flash-chart.swf' name='movie'>
+	<param value='transparent' name='wmode'>
+	<embed width='550px' height='200px'
+		wmode='transparent'
+		movie='../ofc/open-flash-chart.swf'
+		flashvars='data-file=../ofcvaadindata'
+		src='../ofc/open-flash-chart.swf'>
+</object>
+
+
+<object width="550" height="350" type="application/x-shockwave-flash"
+	data="ofc/open-flash-chart.swf"
+	id="ofc-graph-2"
+	style="visibility: visible;">
+</object>
+
+
+<object type="application/x-shockwave-flash"
+		data="ofc/open-flash-chart.swf"
+        width='500' height='250' id='ofc-graph-2' align='middle'>
+	<param name='allowScriptAccess' value='sameDomain' />
+	<param name='movie' value='ofc/open-flash-chart.swf' />
+	<param name='quality' value='high' />
+	<embed src='ofc/open-flash-chart.swf'
+		   quality='high'
+		   bgcolor='#FFFFFF'
+		   width='500'
+		   height='250'
+		   name='open-flash-chart'
+		   flashvars='data-file=ofcvaadindata'
+		   align='middle'
+		   allowScriptAccess='sameDomain'
+		   type='application/x-shockwave-flash'
+		   pluginspage='http://www.macromedia.com/go/getflashplayer' />
+</object>
+
+
+
+ <object width="550" height="200"
+	id="my_chart"
+	classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	style="VISIBILITY: visible"
+	reload="function () { return eval(instance.CallFunction("" + __flash__argumentsToXML(arguments,0) + "")); }"
+	load="function () { return eval(instance.CallFunction("" + __flash__argumentsToXML(arguments,0) + "")); }"
+	post_image="function () { return eval(instance.CallFunction("" + __flash__argumentsToXML(arguments,0) + "")); }"
+	get_img_binary="function () { return eval(instance.CallFunction("" + __flash__argumentsToXML(arguments,0) + "")); }"
+	get_version="function () { return eval(instance.CallFunction("" + __flash__argumentsToXML(arguments,0) + "")); }">
+	
+
+	
+	id='ofc-graph-2' type='application/x-shockwave-flash'
+	
+	
+	
+	Authentication realm: <https://ofcvaadin.googlecode.com:443> Google Code Subversion Repository
+
+
+
+<object type="application/x-shockwave-flash"
+		data="ofc/open-flash-chart.swf"
+        width='500' height='250' id='ofc-graph-2' align='middle'>
+	<param name='allowScriptAccess' value='sameDomain' />
+	<param name='movie' value='ofc/open-flash-chart.swf' />
+	<param name='quality' value='high' />
+	<embed src='ofc/open-flash-chart.swf'
+		   quality='high'
+		   bgcolor='#FFFFFF'
+		   width='500'
+		   height='250'
+		   name='open-flash-chart'
+		   flashvars='data-file=ofcvaadindata'
+		   align='middle'
+		   allowScriptAccess='sameDomain'
+		   type='application/x-shockwave-flash'
+		   pluginspage='http://www.macromedia.com/go/getflashplayer' />
+</object>
+
+
+http://www.permadi.com/tutorial/flashjscommand/
