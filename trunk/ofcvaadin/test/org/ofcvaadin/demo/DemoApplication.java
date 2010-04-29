@@ -45,7 +45,7 @@ public class DemoApplication extends Application {
 		});
 		mainWindow.addComponent(showDemos);
 		
-		//embedOpenFlashChart(mainWindow);
+		embedOpenFlashChart(mainWindow);
 		embedOpenFlashChartV2(mainWindow);
 	}
 	
@@ -57,11 +57,63 @@ public class DemoApplication extends Application {
 	}
 	
 	@SuppressWarnings("serial")
+	private void embedOpenFlashChart(Window mainWindow){
+		Panel p = new Panel();
+		p.setWidth("600px");
+		mainWindow.addComponent(p);
+		p.addComponent(new Label("Ofcvaadin V1 Chart Example"));
+		final OpenFlashChart chartVaadin = new OpenFlashChart(this);
+		chartVaadin.setWidth("500px");
+		chartVaadin.setHeight("200px");
+		p.addComponent(chartVaadin);
+		
+		chartVaadin.setChartDataGenerator(new OpenFlashChart.ChartDataGenerator(){
+			@Override
+			public String getJson() {
+				LineChart lc = new LineChart();
+				lc.setText("test_1");
+
+				ArrayList<Number> lst = new ArrayList<Number>();
+				for (int i = 0; i < 10; i++) {
+					lst.add((int) (Math.random() * 20));
+				}
+				lc.addValues(lst);
+
+				YAxis ya = new YAxis();
+				ya.setMax(22);
+				ya.setSteps(2);
+
+				Chart c = new Chart("Line Chart");
+				c.addElements(lc);
+				c.setYAxis(ya);
+
+				String s = OFC.getInstance().prettyPrint(c, 4);
+				return s;
+			}
+		});
+		
+		Button refresh = new Button("Refresh V1 Chart");
+		refresh.addListener(new ClickListener(){
+			private static final long serialVersionUID = -89669779516839869L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				chartVaadin.requestRepaint();
+			}
+		});
+		p.addComponent(refresh);
+	}
+	
+	@SuppressWarnings("serial")
 	private void embedOpenFlashChartV2(Window mainWindow){
+		Panel p = new Panel();
+		p.setWidth("600px");
+		mainWindow.addComponent(p);
+		p.addComponent(new Label("Ofcvaadin V2 Chart Example"));
 		final OpenFlashChartV2 chartVaadin = new OpenFlashChartV2(this);
 		chartVaadin.setWidth("500px");
 		chartVaadin.setHeight("200px");
-		mainWindow.addComponent(chartVaadin);
+		p.addComponent(chartVaadin);
 		
 		chartVaadin.setChartDataGenerator(new OpenFlashChartV2.ChartDataGenerator(){
 			@Override
@@ -88,7 +140,7 @@ public class DemoApplication extends Application {
 			}
 		});
 		
-		Button refresh = new Button("Refresh Chart");
+		Button refresh = new Button("Refresh V2 Chart");
 		refresh.addListener(new ClickListener(){
 			private static final long serialVersionUID = -89669779516839869L;
 
@@ -97,40 +149,7 @@ public class DemoApplication extends Application {
 				chartVaadin.requestRepaint();
 			}
 		});
-		mainWindow.addComponent(refresh);
-	}
-	
-	@SuppressWarnings("serial")
-	private void embedOpenFlashChart(Window mainWindow){
-		OpenFlashChart chartVaadin = new OpenFlashChart(this);
-		chartVaadin.setWidth("500px");
-		chartVaadin.setHeight("200px");
-		mainWindow.addComponent(chartVaadin);
-		
-		chartVaadin.setChartDataGenerator(new OpenFlashChart.ChartDataGenerator(){
-			@Override
-			public String getJson() {
-				LineChart lc = new LineChart();
-				lc.setText("test_1");
-
-				ArrayList<Number> lst = new ArrayList<Number>();
-				for (int i = 0; i < 10; i++) {
-					lst.add((int) (Math.random() * 20));
-				}
-				lc.addValues(lst);
-
-				YAxis ya = new YAxis();
-				ya.setMax(22);
-				ya.setSteps(2);
-
-				Chart c = new Chart("Line Chart");
-				c.addElements(lc);
-				c.setYAxis(ya);
-
-				String s = OFC.getInstance().prettyPrint(c, 4);
-				return s;
-			}
-		});
+		p.addComponent(refresh);
 	}
 	
 	@SuppressWarnings("serial")
