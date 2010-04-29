@@ -1,7 +1,7 @@
 package org.ofcvaadin.demo;
 
-import org.ofcvaadin.ui.OpenFlashChart;
-import org.ofcvaadin.ui.OpenFlashChart.ChartDataGenerator;
+import org.ofcvaadin.ui.OpenFlashChartV2;
+import org.ofcvaadin.ui.OpenFlashChartV2.ChartDataGenerator;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Button;
@@ -12,7 +12,7 @@ import com.vaadin.ui.Button.ClickListener;
 public class OneChartWindow extends Window {
 	private static final long serialVersionUID = -5162503344338525054L;
 	private final Application application;
-	private OpenFlashChart chartVaadin;
+	private OpenFlashChartV2 chartVaadin;
 	
 	public OneChartWindow(Application app, String title) {
 		super(title);
@@ -21,7 +21,7 @@ public class OneChartWindow extends Window {
 		setWidth("540px");
 		setHeight("320px");
 		
-		chartVaadin = new OpenFlashChart(application);
+		chartVaadin = new OpenFlashChartV2(application);
 		chartVaadin.setWidth("500px");
 		chartVaadin.setHeight("200px");
 		addComponent(chartVaadin);

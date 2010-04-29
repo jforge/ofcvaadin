@@ -13,7 +13,7 @@ import jofc2.model.elements.PieChart;
 
 import org.ofcvaadin.ui.OpenFlashChart;
 import org.ofcvaadin.ui.OpenFlashChartV2;
-import org.ofcvaadin.ui.OpenFlashChart.ChartDataGenerator;
+import org.ofcvaadin.ui.OpenFlashChartV2.ChartDataGenerator;
 
 import com.vaadin.Application;
 import com.vaadin.ui.*;
@@ -107,7 +107,7 @@ public class DemoApplication extends Application {
 		chartVaadin.setHeight("200px");
 		mainWindow.addComponent(chartVaadin);
 		
-		chartVaadin.setChartDataGenerator(new ChartDataGenerator(){
+		chartVaadin.setChartDataGenerator(new OpenFlashChart.ChartDataGenerator(){
 			@Override
 			public String getJson() {
 				LineChart lc = new LineChart();

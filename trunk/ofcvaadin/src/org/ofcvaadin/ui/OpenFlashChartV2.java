@@ -27,6 +27,7 @@ public class OpenFlashChartV2 extends CustomComponent {
 	private final ChartURIHandler chartURIHandler;
 	private boolean initialized = false;
 	private int jsExecutedTimes = 0;
+	private String jsonCache;
 	
 	private ChartDataGenerator chartDataGenerator;
 	
@@ -51,55 +52,61 @@ public class OpenFlashChartV2 extends CustomComponent {
 		addListener(new ChartComponentDetachListener());
 	}
 	
-	private String getJavascript(){
-		return 
-		getJsonFuncContent(chartIndex, chartDataGenerator.getJson())
-		+ defineFunc("get_ofc_movie_object", getFlashMovieObjectFunc())
-		+ defineFunc(getLoadJsonFuncName(chartIndex), getLoadJsonFuncContent(chartIndex))
-		+ loadJson(chartIndex);
+	private String getJavascript(int times){
+		if(times == 0){
+			jsonCache = null;
+		}
+		
+		if(jsonCache == null){
+			jsonCache = chartDataGenerator.getJson();
+		}
+		
+		return getJsonFuncContent(chartIndex, jsonCache)
+			+ defineFunc("get_ofc_movie_object", getFlashMovieObjectFunc())
+			+ defineFunc(getLoadJsonFuncName(chartIndex), getLoadJsonFuncContent(chartIndex))
+			+ loadJson(chartIndex);
 	}
 	
 	@Override
     public void paintContent(PaintTarget target) throws PaintException {
-		System.out.println("paintContent");
+		//System.out.println("paintContent");
 		if(chartDataGenerator == null){
 			throw new PaintException ("chartDataGenerator not set. Please call setChartDataGenerator.");
 		}
 		
-		System.out.println("jsExecutedTimes: " + jsExecutedTimes);
+		//System.out.println("jsExecutedTimes: " + jsExecutedTimes);
 		if(jsExecutedTimes == 0){
-			application.getMainWindow().executeJavaScript(getJavascript());
+			application.getMainWindow().executeJavaScript(getJavascript(jsExecutedTimes));
 		}
 		jsExecutedTimes = 0;
 		
 		if(!initialized){
-			System.out.println("initialize");
 			Label label = new Label(
-"<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'\n" +
-"  codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0'\n" +
-"  id='" + flashObjectId + "' width='500px' height='200px'>\n" +
-"	<param name='allowScriptAccess' value='sameDomain' />\n" +
-"	<param name='wmode' value='transparent' />\n" +
-"	<param name='movie' value='" + flashUrl + "' />\n" +
-//"	<param name='flashvars' value='get-data="+ getJsonFuncName(chartIndex) + "' >\n" +
-"	<param name='flashvars' value='data-file=" + dataUrl + "?time=" + System.currentTimeMillis() + "' >\n" +
-"	<embed name='" + flashObjectId + "'\n" +
-"		src='" + flashUrl + "'\n" +
-"		quality='high'\n" +
-"		bgcolor='#FFFFFF'\n" +
-"		wmode='transparent'\n" +
-"		width='500px'\n" +
-"		height='200px'\n" +
-"		name='open-flash-chart'\n" +
-//"		flashvars='get-data="+ getJsonFuncName(chartIndex) + "' >\n" +
-"		flashvars='data-file=" + dataUrl + "?time=" + System.currentTimeMillis() + "' >\n" +
-"		align='middle'\n" +
-"		allowScriptAccess='sameDomain'\n" +
-"		type='application/x-shockwave-flash'\n" +
-"		pluginspage='http://www.macromedia.com/go/getflashplayer'>\n" +
-"	</embed>\n" +
-"</object>",
-					Label.CONTENT_XHTML);
+				"<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'\n" +
+				"  codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0'\n" +
+				"  id='" + flashObjectId + "' width='500px' height='200px'>\n" +
+				"	<param name='allowScriptAccess' value='sameDomain' />\n" +
+				"	<param name='wmode' value='transparent' />\n" +
+				"	<param name='movie' value='" + flashUrl + "' />\n" +
+				//"	<param name='flashvars' value='get-data="+ getJsonFuncName(chartIndex) + "' >\n" +
+				"	<param name='flashvars' value='data-file=" + dataUrl + "?time=" + System.currentTimeMillis() + "' >\n" +
+				"	<embed name='" + flashObjectId + "'\n" +
+				"		src='" + flashUrl + "'\n" +
+				"		quality='high'\n" +
+				"		bgcolor='#FFFFFF'\n" +
+				"		wmode='transparent'\n" +
+				"		width='500px'\n" +
+				"		height='200px'\n" +
+				"		name='open-flash-chart'\n" +
+				//"		flashvars='get-data="+ getJsonFuncName(chartIndex) + "' >\n" +
+				"		flashvars='data-file=" + dataUrl + "?time=" + System.currentTimeMillis() + "' >\n" +
+				"		align='middle'\n" +
+				"		allowScriptAccess='sameDomain'\n" +
+				"		type='application/x-shockwave-flash'\n" +
+				"		pluginspage='http://www.macromedia.com/go/getflashplayer'>\n" +
+				"	</embed>\n" +
+				"</object>",
+				Label.CONTENT_XHTML);
 			
 			setCompositionRoot(label);
 			initialized = true;
@@ -113,11 +120,11 @@ public class OpenFlashChartV2 extends CustomComponent {
 		
 		@Override
 		public void repaintRequested(RepaintRequestEvent event) {
-			System.out.println("repaintRequested");
+			//System.out.println("repaintRequested");
 			if(initialized){
-				System.out.println("jsExecutedTimes: " + jsExecutedTimes);
+				//System.out.println("jsExecutedTimes: " + jsExecutedTimes);
 				if(jsExecutedTimes == 0){
-					application.getMainWindow().executeJavaScript(getJavascript());
+					application.getMainWindow().executeJavaScript(getJavascript(jsExecutedTimes));
 				}
 				jsExecutedTimes ++;
 			}
@@ -143,8 +150,7 @@ public class OpenFlashChartV2 extends CustomComponent {
 	}
 	
 	private String loadJson(int id){
-		return
-			"setTimeout(\"" + getLoadJsonFuncName(id) + "()\", " + (initialized ? 0 : 150) + ");";
+		return "setTimeout(\"" + getLoadJsonFuncName(id) + "()\", " + (initialized ? 0 : 150) + ");";
 	}
 	
 	private String defineFunc(String funcName, String func){
@@ -224,16 +230,10 @@ public class OpenFlashChartV2 extends CustomComponent {
 			if (! relativeDataUrl.equals(relativeUri)) {
 				return null;
 			}
-			//System.out.println("ChartURIHandler: url=" + relativeUri);
 			
-			if(chartDataGenerator == null){
-				System.err.println("chartDataGenerator not set. Please call setChartDataGenerator.");
-			}
+			//System.out.println("json=" + jsonCache);
+			ByteArrayInputStream istream = new ByteArrayInputStream(jsonCache.getBytes());
 			
-			String json = chartDataGenerator.getJson();
-			//System.out.println("json=" + json);
-			ByteArrayInputStream istream = new ByteArrayInputStream(
-					json.getBytes());
 			return new DownloadStream(istream, null, null);
 		}
 	}
