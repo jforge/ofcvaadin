@@ -26,7 +26,6 @@ public class OpenFlashChart extends CustomComponent {
 	private final String relativeDataUri;
 	private final ChartURIHandler chartURIHandler;
 	
-	private Embedded embedded;
 	private ChartDataGenerator chartDataGenerator;
 	
 	public OpenFlashChart(Application app) {
@@ -57,7 +56,7 @@ public class OpenFlashChart extends CustomComponent {
 			throw new PaintException ("chartDataGenerator not set. Please call setChartDataGenerator.");
 		}
 		
-		embedded = new Embedded(null, new ExternalResource(flashUrl));
+		Embedded embedded = new Embedded(null, new ExternalResource(flashUrl));
 		embedded.setMimeType("application/x-shockwave-flash");
 		embedded.setParameter("movie", flashUrl);
 		embedded.setParameter("wmode", "transparent"); //transparent, opaque
